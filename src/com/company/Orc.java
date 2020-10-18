@@ -1,12 +1,22 @@
 package com.company;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class Orc extends Thread {
-    public boolean gritou = false;
-    public boolean gritar(){
-        return gritou = true;
+    private int id;
+    private OrcLock orcLock;
+    private Presa presa;
+    public Orc(int id, OrcLock orcLock, Presa presa){
+        this.id = id;
+        this.orcLock = orcLock;
+        this.presa = presa;
     }
+
     public void run(){
-        gritar();
-        System.out.println("O orc gritou? " + gritou);
+        System.out.println("Orc " + id +" gritou");
+        //while (!presa.mordida) {
+            orcLock.tentaMorder(id, presa);
+        //}
     }
 }
