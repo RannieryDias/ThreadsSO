@@ -7,6 +7,7 @@ public class Orc extends Thread {
     private int id;
     private OrcLock orcLock;
     private Presa presa;
+
     public Orc(int id, OrcLock orcLock, Presa presa){
         this.id = id;
         this.orcLock = orcLock;
@@ -15,8 +16,13 @@ public class Orc extends Thread {
 
     public void run(){
         System.out.println("Orc " + id +" gritou");
-        //while (!presa.mordida) {
+        while (!presa.mordida) {
             orcLock.tentaMorder(id, presa);
-        //}
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
